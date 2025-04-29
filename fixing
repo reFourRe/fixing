@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>reFour's Hard Money, Fix & Flip Analyzer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: white;
+        }
+
+        h2 {
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+
+        .section {
+            background-color: #111;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .section label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .section input, .section select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background-color: #333;
+            color: white;
+        }
+
+        .readonly {
+            background-color: #f2f2f2;
+        }
+
+        .report-section {
+            background-color: #111;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+            border: 1px solid #555;
+        }
+
+        .report-section h3 {
+            margin-top: 0;
+            color: white;
+        }
+
+        .report {
+            margin-bottom: 10px;
+        }
+
+        .green {
+            color: green;
+            font-weight: bold;
+        }
+
+        .green-text {
+            color: green;
+        }
+
+        .button-section {
+            text-align: center;
+        }
+
+        button {
+            background-color: #333;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin: 10px;
+        }
+
+        button:hover {
+            background-color: #444;
+        }
+
+        .export-options {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .property-address-section label, .property-address-section input {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>reFour's Hard Money, Fix & Flip Analyzer</h1>
+    <h2>Maximizing investments for borrowers and lenders</h2>
+
+    <!-- Property Address Section -->
+    <div class="section property-address-section">
+        <label for="propertyAddress">Property Address</label>
+        <input type="text" id="propertyAddress" placeholder="Enter Property Address" oninput="updateCalculations()" />
+
+        <label for="city">City</label>
+        <input type="text" id="city" placeholder="Enter City" oninput="updateCalculations()" />
+
+        <label for="state">State</label>
+        <input type="text" id="state" placeholder="Enter State" oninput="updateCalculations()" />
+
+        <label for="zipCode">Zip Code</label>
+        <input type="text" id="zipCode" placeholder="Enter Zip Code" oninput="updateCalculations()" />
+    </div>
+
+    <!-- Finance Type Section -->
+    <div class="section">
+        <label for="financeType">Finance Type</label>
+        <select id="financeType" onchange="updateCalculations()">
+            <option value="hardMoney">Hard Money Only</option>
+        </select>
+    </div>
+
+    <!-- Loan Terms and Conditions Section -->
+    <div class="section">
+        <h3>Loan Terms and Conditions</h3>
+        <label for="purchasePrice">Purchase Price</label>
+        <input type="number" id="purchasePrice" placeholder="Enter Purchase Price" oninput="updateCalculations()" />
+
+        <label for="interestRate">Interest Rate (%)</label>
+        <select id="interestRate" onchange="updateCalculations()">
+            <option value="8">8%</option>
+            <option value="9">9%</option>
+            <option value="10">10%</option>
+            <option value="11">11%</option>
+            <option value="12">12%</option>
+            <option value="13">13%</option>
+            <option value="14">14%</option>
+            <option value="15">15%</option>
+        </select>
+
+        <label for="loanTerm">Loan Term (Months)</label>
+        <select id="loanTerm" onchange="updateCalculations()">
+            <option value="3">3 months</option>
+            <option value="6">6 months</option>
+            <option value="9">9 months</option>
+            <option value="12">12 months</option>
+        </select>
+
+        <label for="loanToValue">Loan-to-Value Ratio (LTV)</label>
+        <select id="loanToValue" onchange="updateCalculations()">
+            <option value="65">65% Loan - 35% Down Payment</option>
+            <option value="70">70% Loan - 30% Down Payment</option>
+            <option value="75">75% Loan - 25% Down Payment</option>
+            <option value="80">80% Loan - 20% Down Payment</option>
+            <option value="85">85% Loan - 15% Down Payment</option>
+            <option value="90">90% Loan - 10% Down Payment</option>
+        </select>
+
+        <label for="closingCosts">Closing Costs (%)</label>
+        <select id="closingCosts" onchange="updateCalculations()">
+            <option value="2">2%</option>
+            <option value="3">3%</option>
+            <option value="4">4%</option>
+            <option value="5">5%</option>
+            <option value="6">6%</option>
+            <option value="7">7%</option>
+            <option value="8">8%</option>
+            <option value="9">9%</option>
+            <option value="10">10%</option>
+        </select>
+
+        <label for="loanPoints">Loan Points (%)</label>
+        <select id="loanPoints" onchange="updateCalculations()">
+            <option value="1">1%</option>
+            <option value="2">2%</option>
+            <option value="3">3%</option>
+            <option value="4">4%</option>
+            <option value="5">5%</option>
+        </select>
+
+        <label for="loanFees">Loan Fees ($)</label>
+        <input type="number" id="loanFees" readonly placeholder="Loan Fees auto-populate" />
+    </div>
+
+    <!-- Fix & Flip Key Metrics Section (Form with all labels) -->
+    <div class="section">
+        <h3>Fix & Flip Key Metrics</h3>
+        <label for="afterRepairValue">After Repair Value (ARV)</label>
+        <input type="number" id="afterRepairValue" placeholder="Enter ARV" oninput="updateCalculations()" />
+
+        <label for="rehabBudget">Rehab Budget</label>
+        <input type="number" id="rehabBudget" placeholder="Enter Rehab Budget" oninput="updateCalculations()" />
+
+        <label for="carryingCost">Carrying Costs</label>
+        <input type="number" id="carryingCost" placeholder="Enter Carrying Costs" oninput="updateCalculations()" />
+
+        <label for="loanRepayment">Loan Repayment</label>
+        <input type="number" id="loanRepayment" placeholder="Enter Loan Repayment" oninput="updateCalculations()" />
+
+        <label for="estimatedProfit">Estimated Profit</label>
+        <input type="number" id="estimatedProfit" placeholder="Enter Estimated Profit" oninput="updateCalculations()" />
+
+        <label for="expectedROI">Expected ROI (%)</label>
+        <input type="number" id="expectedROI" placeholder="Enter Expected ROI" oninput="updateCalculations()" />
+
+        <label for="netProfit">Net Profit</label>
+        <input type="number" id="netProfit" placeholder="Enter Net Profit" oninput="updateCalculations()" />
+    </div>
+
+    <!-- Fix & Flip Report Section -->
+    <div class="report-section">
+        <h3>Fix & Flip Report</h3>
+        <div class="report">
+            <p><strong>After Repair Value (ARV):</strong> <span class="green-text" id="reportArv"></span></p>
+            <p><strong>Rehab Budget:</strong> <span class="green-text" id="reportRehabBudget"></span></p>
+            <p><strong>Carrying Costs:</strong> <span class="green-text" id="reportCarryingCosts"></span></p>
+            <p><strong>Loan Repayment:</strong> <span class="green-text" id="reportLoanRepayment"></span></p>
+            <p><strong>Estimated Profit:</strong> <span class="green-text" id="reportEstimatedProfit"></span></p>
+            <p><strong>Expected ROI (%):</strong> <span class="green-text" id="reportExpectedROI"></span></p>
+            <p><strong>Net Profit:</strong> <span class="green-text" id="reportNetProfit"></span></p>
+        </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="button-section">
+        <button type="button" onclick="generateReport()">Generate Report</button>
+    </div>
+
+    <!-- Export Options -->
+    <div class="export-options">
+        <button>Download PDF</button>
+        <button>Export to Excel</button>
+    </div>
+</div>
+
+<script>
+// Add JavaScript functionality for calculations and form updates here
+
+function updateCalculations() {
+    // Retrieve input values
+    let purchasePrice = parseFloat(document.getElementById('purchasePrice').value) || 0;
+    let interestRate = parseFloat(document.getElementById('interestRate').value) || 0;
+    let loanTerm = parseFloat(document.getElementById('loanTerm').value) || 0;
+    let loanToValue = parseFloat(document.getElementById('loanToValue').value) || 0;
+    let closingCosts = parseFloat(document.getElementById('closingCosts').value) || 0;
+    let loanPoints = parseFloat(document.getElementById('loanPoints').value) || 0;
+    let afterRepairValue = parseFloat(document.getElementById('afterRepairValue').value) || 0;
+    let rehabBudget = parseFloat(document.getElementById('rehabBudget').value) || 0;
+    let carryingCost = parseFloat(document.getElementById('carryingCost').value) || 0;
+    let loanRepayment = parseFloat(document.getElementById('loanRepayment').value) || 0;
+    let estimatedProfit = parseFloat(document.getElementById('estimatedProfit').value) || 0;
+    let expectedROI = parseFloat(document.getElementById('expectedROI').value) || 0;
+    let netProfit = parseFloat(document.getElementById('netProfit').value) || 0;
+
+    // Calculate Loan Fees
+    let loanFees = (purchasePrice * (loanPoints / 100)) + (purchasePrice * (closingCosts / 100));
+
+    // Update fields dynamically
+    document.getElementById('loanFees').value = loanFees.toFixed(2);
+
+    // Update the report
+    document.getElementById('reportArv').innerText = `$${afterRepairValue.toFixed(2)}`;
+    document.getElementById('reportRehabBudget').innerText = `$${rehabBudget.toFixed(2)}`;
+    document.getElementById('reportCarryingCosts').innerText = `$${carryingCost.toFixed(2)}`;
+    document.getElementById('reportLoanRepayment').innerText = `$${loanRepayment.toFixed(2)}`;
+    document.getElementById('reportEstimatedProfit').innerText = `$${estimatedProfit.toFixed(2)}`;
+    document.getElementById('reportExpectedROI').innerText = `${expectedROI.toFixed(2)}%`;
+    document.getElementById('reportNetProfit').innerText = `$${netProfit.toFixed(2)}`;
+}
+
+function generateReport() {
+    // Update the calculations when the report is generated
+    updateCalculations();
+}
+</script>
+
+</body>
+</html>
+
